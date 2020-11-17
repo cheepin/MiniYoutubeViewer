@@ -2,33 +2,39 @@ const {ipcRenderer} = require('electron')
 
 var tag = document.createElement('script');
 
-
-// 3. This function creates an <iframe> (and YouTube player)
-//    after the API code downloads.
 var width;
 var height;
 var youtube_id;
 var player;
+
+// on Create
+ipcRenderer.on('create-youtube', (event, _width, _height, _youtube_id) => {
+  width = _width;
+  height = _height;
+  youtube_id = _youtube_id;
+})
+
+// on YoutubeApi Created
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('myPlayer', {
     width: width,
     height: height,
     videoId: youtube_id,
     events: {
-      'onReady': onPlayerReady,
+      'onReady': (event) => event.target.playVideo(),
       'onStateChange': onPlayerStateChange
     }
   });
 }
 
-// 4. The API will call this function when the video player is ready.
-function onPlayerReady(event) {
-  event.target.playVideo();
+// on stopped Youtube
+function stopVideo() {
+  player.stopVideo();
 }
 
-// 5. The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
+// The API calls this function when the player's state changes.
+// The function indicates that when playing a video (state=1),
+// the player should play for six seconds and then stop.
 var done = false;
 function onPlayerStateChange(event) {
   // if (event.data == YT.PlayerState.PLAYING && !done) {
@@ -36,11 +42,8 @@ function onPlayerStateChange(event) {
   //   done = true;
   // }
 }
-function stopVideo() {
-  player.stopVideo();
-}
 
-
+// on Async Message Button Clicked
 const asyncMsgBtn = document.getElementById("async-msg");
 console.log(asyncMsgBtn);
 asyncMsgBtn.addEventListener('click', () => {
@@ -50,8 +53,3 @@ asyncMsgBtn.addEventListener('click', () => {
   // ipcRenderer.invoke('asynchronous-message', 'ping')
 })
 
-ipcRenderer.on('create-youtube', (event, _width, _height, _youtube_id) => {
-  width = _width;
-  height = _height;
-  youtube_id = _youtube_id;
-})
