@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain} = require('electron')
+const { app, BrowserWindow, ipcMain, ipcRenderer} = require('electron')
 
 const width = parseInt(process.argv[2]);
 const height = parseInt(process.argv[3]);
@@ -54,6 +54,10 @@ app.on('activate', () => {
   }
 })
 
+// on Close
+ipcMain.handle('close-button-pressed', (event) => {
+  app.exit();
+})
 
 // ipcMain.handle('create-youtube', (event, url) => {
 //   console.log(`receive ${arg}`);

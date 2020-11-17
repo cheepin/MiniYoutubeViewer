@@ -1,5 +1,6 @@
 const {ipcRenderer} = require('electron')
-const asyncMsgBtn = document.getElementById("async-msg");
+const asyncMsgBtn = document.getElementById("read-button");
+const closeBtn = document.getElementById("close-button");
 const size_offset_width = 0.95;
 const size_offset_height = 0.92;
 
@@ -60,3 +61,6 @@ asyncMsgBtn.addEventListener('click', () => {
   // ipcRenderer.invoke('asynchronous-message', 'ping')
 })
 
+closeBtn.addEventListener('click', () => {
+  ipcRenderer.invoke('close-button-pressed');
+})
