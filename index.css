@@ -1,0 +1,13 @@
+p {
+    color:blue; line-height:1.5;
+}
+.control {
+    position: relative;
+    padding-left: 94%;
+    z-index: 2;
+}
+.player{
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+}
