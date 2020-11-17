@@ -1,8 +1,8 @@
 const {ipcRenderer} = require('electron')
 const readBtn = document.getElementById("read-button");
 const closeBtn = document.getElementById("close-button");
-const size_offset_width = 0.95;
-const size_offset_height = 0.92;
+const size_offset_width = 0.99;
+const size_offset_height = 0.99;
 
 var tag = document.createElement('script');
 var width;
