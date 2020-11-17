@@ -1,5 +1,10 @@
 const { app, BrowserWindow, ipcMain} = require('electron')
 
+// デバッグ or 本番
+if (process.env.NODE_ENV === "debug") {
+}
+else{
+}
 
 //引数
 var width = parseInt(process.argv[2]);
