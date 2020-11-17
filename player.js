@@ -1,7 +1,7 @@
 const {ipcRenderer} = require('electron')
 const asyncMsgBtn = document.getElementById("async-msg");
 const size_offset_width = 0.95;
-const size_offset_height = 0.95;
+const size_offset_height = 0.92;
 
 var tag = document.createElement('script');
 var width;
