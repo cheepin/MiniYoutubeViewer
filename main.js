@@ -1,34 +1,42 @@
 const { app, BrowserWindow, ipcMain} = require('electron')
 
-// デバッグ or 本番
-if (process.env.NODE_ENV === "debug") {
-}
-else{
-}
-
-//引数
-var width = parseInt(process.argv[2]);
-var height = parseInt(process.argv[3]);
+const width = parseInt(process.argv[2]);
+const height = parseInt(process.argv[3]);
 var youtube_id = process.argv[4];
 
+console.log('start');
 //作成
 function createWindow () {
   const win = new BrowserWindow({
     width: width,
     height: height,
+    thickFrame: false,
+    resizable: true,
     webPreferences: {
       nodeIntegration: true
     },
     alwaysOnTop: true
   })
   win.loadFile('index.html');
-  // win.webContents.openDevTools();
+  
+  // In Debug
+  if (process.env.NODE_ENV === "debug") {
+    win.webContents.openDevTools();
+  }
 
-    win.once('ready-to-show', () => {
-        win.show();
-        console.log('ready to show');
-        win.webContents.send('create-youtube', width, height, youtube_id);
-    })
+  // on Ready
+  win.once('ready-to-show', () => {
+      win.show();
+      console.log('ready to show');
+      win.webContents.send('create-youtube', width, height, youtube_id);
+    }
+  )
+
+  // on Resize
+  win.on('resize', () => {
+    const bounds = win.getBounds();
+    win.webContents.send('resized-window', bounds.width, bounds.height);
+  });
 }
 
 app.whenReady().then(createWindow)

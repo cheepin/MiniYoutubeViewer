@@ -1,7 +1,9 @@
 const {ipcRenderer} = require('electron')
+const asyncMsgBtn = document.getElementById("async-msg");
+const size_offset_width = 0.95;
+const size_offset_height = 0.95;
 
 var tag = document.createElement('script');
-
 var width;
 var height;
 var youtube_id;
@@ -9,8 +11,8 @@ var player;
 
 // on Create
 ipcRenderer.on('create-youtube', (event, _width, _height, _youtube_id) => {
-  width = _width;
-  height = _height;
+  width = _width * size_offset_width;
+  height = _height * size_offset_height;
   youtube_id = _youtube_id;
 })
 
@@ -27,10 +29,16 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
-// on stopped Youtube
+// on Stopped Youtube
 function stopVideo() {
   player.stopVideo();
 }
+
+// on Resized
+ipcRenderer.on("resized-window", (event, _width, _height) => {
+  console.log(`resized message from main ${_width}: ${_height}`);
+  player.setSize(_width * size_offset_width, _height * size_offset_height);
+})
 
 // The API calls this function when the player's state changes.
 // The function indicates that when playing a video (state=1),
@@ -44,7 +52,6 @@ function onPlayerStateChange(event) {
 }
 
 // on Async Message Button Clicked
-const asyncMsgBtn = document.getElementById("async-msg");
 console.log(asyncMsgBtn);
 asyncMsgBtn.addEventListener('click', () => {
   tag.src = "https://www.youtube.com/iframe_api";
