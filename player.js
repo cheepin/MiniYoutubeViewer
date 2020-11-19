@@ -1,8 +1,7 @@
 const {ipcRenderer} = require('electron')
-const closeBtn = document.getElementById("close-button");
 const url_box = document.getElementById("url-box");
 const size_offset_width = 0.992;
-const size_offset_height = 0.992;
+const size_offset_height = 0.96;
 
 var tag = document.createElement('script');
 var width;
@@ -51,16 +50,3 @@ var done = false;
 function onPlayerStateChange(event) {
 }
 
-// on Close Button Clicked
-closeBtn.addEventListener('click', () => {
-  ipcRenderer.invoke('close-button-pressed');
-})
-
-$("body").on("mouseenter", ()=> {
-  $('#close-button').fadeIn();
-  $('#draggable-field').fadeIn();
-}).on("mouseleave", () =>{
-  $('#close-button').fadeOut();
-  $('#draggable-field').fadeOut();
-  console.log("out");
-})
