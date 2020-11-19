@@ -1,13 +1,16 @@
-p {
-    color:blue; line-height:1.5;
-}
 .control {
     position: relative;
-    padding-left: 94%;
+    padding-left: 88%;
     z-index: 2;
 }
 .player{
     position: absolute;
     z-index: 1;
-    top: -5px;
+    top: 2px;
+}
+body{
+    overflow-x: hidden;
+}
+#draggable-field{
+    -webkit-app-region: drag;
 }

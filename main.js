@@ -1,10 +1,14 @@
 const { app, BrowserWindow, ipcMain, ipcRenderer} = require('electron')
 
-const width = parseInt(process.argv[2]);
-const height = parseInt(process.argv[3]);
-var youtube_id = process.argv[4];
+// on App Start
+const arg_path = process.argv[2];
+const args = arg_path.split("/");
+const width = parseInt(args[2]);
+const height = parseInt(args[3]);
+var youtube_id = args[4]
 
 console.log('start');
+
 //作成
 function createWindow () {
   const win = new BrowserWindow({
@@ -12,6 +16,7 @@ function createWindow () {
     height: height,
     resizable: true,
     frame: false,
+    backgroundColor: "#AAFFFF",
     webPreferences: {
       nodeIntegration: true
     },

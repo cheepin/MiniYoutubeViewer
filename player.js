@@ -1,8 +1,9 @@
 const {ipcRenderer} = require('electron')
 const readBtn = document.getElementById("read-button");
 const closeBtn = document.getElementById("close-button");
-const size_offset_width = 0.99;
-const size_offset_height = 0.99;
+const url_box = document.getElementById("url-box");
+const size_offset_width = 0.992;
+const size_offset_height = 0.992;
 
 var tag = document.createElement('script');
 var width;
@@ -15,6 +16,12 @@ ipcRenderer.on('create-youtube', (event, _width, _height, _youtube_id) => {
   width = _width * size_offset_width;
   height = _height * size_offset_height;
   youtube_id = _youtube_id;
+  url_box.innerHTML = youtube_id;
+
+  // youtube API invoke
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 })
 
 // on YoutubeApi Created
@@ -28,6 +35,11 @@ function onYouTubeIframeAPIReady() {
       'onStateChange': onPlayerStateChange
     }
   });
+
+  // on Resized
+  ipcRenderer.on("resized-window", (event, _width, _height) => {
+    player.setSize(_width * size_offset_width, _height * size_offset_height);
+  })
 }
 
 // on Stopped Youtube
@@ -35,19 +47,11 @@ function stopVideo() {
   player.stopVideo();
 }
 
-// on Resized
-ipcRenderer.on("resized-window", (event, _width, _height) => {
-  console.log(`resized message from main ${_width}: ${_height}`);
-  player.setSize(_width * size_offset_width, _height * size_offset_height);
-})
+
 
 // on Youtube StateChange
 var done = false;
 function onPlayerStateChange(event) {
-  // if (event.data == YT.PlayerState.PLAYING && !done) {
-  //   setTimeout(stopVideo, 6000);
-  //   done = true;
-  // }
 }
 
 // on Read Button Clicked
