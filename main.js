@@ -16,11 +16,12 @@ function createWindow () {
     height: height,
     resizable: true,
     frame: false,
+    thickFrame: true,
     backgroundColor: "#FFFFFF",
     webPreferences: {
       nodeIntegration: true
     },
-    alwaysOnTop: true
+    alwaysOnTop: true,
   })
   win.loadFile('index.html');
   

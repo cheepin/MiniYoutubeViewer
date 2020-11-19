@@ -46,8 +46,6 @@ function stopVideo() {
   player.stopVideo();
 }
 
-
-
 // on Youtube StateChange
 var done = false;
 function onPlayerStateChange(event) {
@@ -56,4 +54,13 @@ function onPlayerStateChange(event) {
 // on Close Button Clicked
 closeBtn.addEventListener('click', () => {
   ipcRenderer.invoke('close-button-pressed');
+})
+
+$("body").on("mouseenter", ()=> {
+  $('#close-button').fadeIn();
+  $('#draggable-field').fadeIn();
+}).on("mouseleave", () =>{
+  $('#close-button').fadeOut();
+  $('#draggable-field').fadeOut();
+  console.log("out");
 })

@@ -16,12 +16,10 @@ body{
 #draggable-field {
     -webkit-app-region: drag;
     opacity: 0.8;
-    overflow: hidden;
 }
 #close-button {
     padding: 0;
     border: none;
     background: transparent;
     opacity: 0.8;
-    overflow: hidden;
 }
