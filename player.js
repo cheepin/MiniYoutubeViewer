@@ -1,5 +1,4 @@
 const {ipcRenderer} = require('electron')
-const url_box = document.getElementById("url-box");
 const size_offset_width = 0.992;
 const size_offset_height = 0.96;
 
@@ -14,7 +13,6 @@ ipcRenderer.on('create-youtube', (event, _width, _height, _youtube_id) => {
   width = _width * size_offset_width;
   height = _height * size_offset_height;
   youtube_id = _youtube_id;
-  url_box.innerHTML = youtube_id;
 
   // youtube API invoke
   tag.src = "https://www.youtube.com/iframe_api";
