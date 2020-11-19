@@ -2,15 +2,26 @@
     position: relative;
     padding-left: 88%;
     z-index: 2;
+    opacity: 1.0;
 }
+
 .player{
     position: absolute;
     z-index: 1;
     top: 2px;
 }
 body{
-    overflow-x: hidden;
+    overflow: hidden;
 }
-#draggable-field{
+#draggable-field {
     -webkit-app-region: drag;
+    opacity: 0.8;
+    overflow: hidden;
+}
+#close-button {
+    padding: 0;
+    border: none;
+    background: transparent;
+    opacity: 0.8;
+    overflow: hidden;
 }

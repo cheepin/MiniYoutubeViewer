@@ -16,7 +16,7 @@ function createWindow () {
     height: height,
     resizable: true,
     frame: false,
-    backgroundColor: "#AAFFFF",
+    backgroundColor: "#FFFFFF",
     webPreferences: {
       nodeIntegration: true
     },
@@ -63,7 +63,3 @@ app.on('activate', () => {
 ipcMain.handle('close-button-pressed', (event) => {
   app.exit();
 })
-
-// ipcMain.handle('create-youtube', (event, url) => {
-//   console.log(`receive ${arg}`);
-// })
