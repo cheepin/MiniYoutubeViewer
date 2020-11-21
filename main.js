@@ -1,19 +1,33 @@
 const { app, BrowserWindow, ipcMain, ipcRenderer} = require('electron')
 
 // on App Start
-const arg_path = process.argv[2];
-const args = arg_path.split("/");
-const width = parseInt(args[2]);
-const height = parseInt(args[3]);
-var youtube_id = args[4]
+const debug_path = 'youtube://7TA_VPCh7K0/?width=1920&height=1080'
+try{
+  // receive arg
+  const whole_args = process.argv[2]
+  const args = whole_args.split('://')[1]
+  const splitted_params = args.split('?')
+  query =  splitted_params[1].split('&')
 
-console.log('start');
+    // parse arg
+  var param_keys = {}
+  param_keys['youtube_id'] = splitted_params[0]
+  query.forEach(item => {
+    key_value = item.split('=')
+    param_keys[key_value[0]] = key_value[1]
+    console.log(item)
+  });
+}
+catch(e){
+  alert('non valid url or args')
+  app.exit()
+}
 
-//作成
+// on create window
 function createWindow () {
   const win = new BrowserWindow({
-    width: width,
-    height: height,
+    width: parseInt(param_keys['width']),
+    height: parseInt(param_keys['height']),
     resizable: true,
     thickFrame: true,
     autoHideMenuBar: true,
@@ -34,7 +48,7 @@ function createWindow () {
   win.once('ready-to-show', () => {
       win.show();
       console.log('ready to show');
-      win.webContents.send('create-youtube', width, height, youtube_id);
+      win.webContents.send('create-youtube', parseInt(param_keys['width']), parseInt(param_keys['height']), param_keys['youtube_id']);
     }
   )
 
