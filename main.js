@@ -1,10 +1,17 @@
-const { app, BrowserWindow, ipcMain, ipcRenderer} = require('electron')
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  ipcRenderer,
+  dialog,
+} = require('electron')
 
 // on App Start
 const debug_path = 'youtube://7TA_VPCh7K0/?width=1920&height=1080'
+const whole_args = process.argv[2]
+
 try{
   // receive arg
-  const whole_args = process.argv[2]
   const args = whole_args.split('://')[1]
   const splitted_params = args.split('?')
   query =  splitted_params[1].split('&')
@@ -19,7 +26,7 @@ try{
   });
 }
 catch(e){
-  alert('non valid url or args')
+  dialog.showErrorBox('args invalid', `non valid url or args: ${whole_args}`)
   app.exit()
 }
 
@@ -48,7 +55,7 @@ function createWindow () {
   win.once('ready-to-show', () => {
       win.show();
       console.log('ready to show');
-      win.webContents.send('create-youtube', parseInt(param_keys['width']), parseInt(param_keys['height']), param_keys['youtube_id']);
+      win.webContents.send('create-youtube', param_keys);
     }
   )
 

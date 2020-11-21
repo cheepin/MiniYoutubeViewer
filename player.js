@@ -8,11 +8,11 @@ var height;
 var youtube_id;
 var player;
 
-// on Create
-ipcRenderer.on('create-youtube', (event, _width, _height, _youtube_id) => {
-  width = _width * size_offset_width;
-  height = _height * size_offset_height;
-  youtube_id = _youtube_id;
+// on Create Window From Main-Process
+ipcRenderer.on('create-youtube', (event, params) => {
+  width = parseInt(params['width']) * size_offset_width;
+  height = parseInt(params['height']) * size_offset_height;
+  youtube_id = params['youtube_id'];
 
   // youtube API invoke
   tag.src = "https://www.youtube.com/iframe_api";
@@ -27,10 +27,16 @@ function onYouTubeIframeAPIReady() {
     height: height,
     videoId: youtube_id,
     events: {
-      'onReady': (event) => event.target.playVideo(),
+      'onReady': onReady,
       'onStateChange': onPlayerStateChange
     }
   });
+
+  // on Ready
+  function onReady(event) {
+    const yt_controler_id = 'ytp-right-controls';
+    event.target.playVideo();
+  }
 
   // on Resized
   ipcRenderer.on("resized-window", (event, _width, _height) => {
